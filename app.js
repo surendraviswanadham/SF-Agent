@@ -802,9 +802,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 isThinking = false;
             }
             
-            // Extract text from all potential MIAW payload paths
+            // Safely parse entryPayload if it is delivered as a JSON string by Salesforce MIAW SDK
+            let payload = entry.entryPayload || detail.entryPayload;
+            if (typeof payload === 'string') {
+                try {
+                    payload = JSON.parse(payload);
+                } catch (e) {
+                    console.warn('Failed to parse entryPayload string:', e);
+                }
+            }
+            
+            // Extract text from abstractMessage staticContent or other message payload properties
             let text = '';
-            const abstractMessage = entry.entryPayload?.abstractMessage || detail.entryPayload?.abstractMessage;
+            const abstractMessage = payload?.abstractMessage || (typeof payload === 'object' ? payload : null);
             const staticContent = abstractMessage?.staticContent;
             
             if (staticContent?.text) {
@@ -813,6 +823,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 text = staticContent.caption;
             } else if (staticContent?.title) {
                 text = staticContent.title;
+            } else if (typeof payload?.text === 'string') {
+                text = payload.text;
+            } else if (typeof payload?.content === 'string') {
+                text = payload.content;
             } else if (typeof entry.content === 'string') {
                 text = entry.content;
             } else if (typeof entry.text === 'string') {
