@@ -678,7 +678,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 formattedContent = `
                     <div class="message-wrapper ai">
-                        <div class="ai-avatar">✨</div>
+                        <div class="ai-avatar">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+                            </svg>
+                        </div>
                         <div class="message-content">
                             <div class="message-bubble">${htmlContent}</div>
                             ${cardsHtml}
@@ -836,17 +840,34 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('onEmbeddedMessagingMessageSent', handleSalesforceMessageEvent);
     window.addEventListener('onEmbeddedMessageSent', handleSalesforceMessageEvent);
 
+    // Suppress default Salesforce floating chat button widget from visible screen
+    function suppressSalesforceFloatingWidget() {
+        const targets = document.querySelectorAll('embedded-messaging-conversation-button, embedded-messaging-container, embedded-messaging-bootstrap, .embeddedMessagingConversationButton, .embeddedMessagingContainer, [class*="embeddedMessaging"]');
+        targets.forEach(el => {
+            el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('visibility', 'hidden', 'important');
+            el.style.setProperty('opacity', '0', 'important');
+            el.style.setProperty('pointer-events', 'none', 'important');
+            el.style.setProperty('position', 'fixed', 'important');
+            el.style.setProperty('top', '-99999px', 'important');
+            el.style.setProperty('left', '-99999px', 'important');
+        });
+    }
+
     // Immediate check on load in case onEmbeddedMessagingReady fired before listener attached
     if (window.embeddedservice_bootstrap && embeddedservice_bootstrap.utilAPI) {
         isInitialized = true;
         tryLaunchSalesforceChat();
     }
 
-    // Fallback sync loop: checks the Salesforce DOM every 350ms to grab history, status updates, card renders
+    suppressSalesforceFloatingWidget();
+
+    // Fallback sync loop: checks the Salesforce DOM every 250ms to grab history, status updates, card renders & hide widget
     setInterval(() => {
+        suppressSalesforceFloatingWidget();
         if (!hasLaunched && window.embeddedservice_bootstrap && embeddedservice_bootstrap.utilAPI) {
             tryLaunchSalesforceChat();
         }
         syncWithSalesforceDOM();
-    }, 350);
+    }, 250);
 });

@@ -5,35 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Room Reservations - AI Assistant</title>
-    <!-- Google Fonts for premium typography -->
+    <!-- Google Fonts for Anthropic Claude typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..600;1,400..600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="app-container">
-        <!-- Minimal, clean header -->
+        <!-- Minimalist Claude Header -->
         <header class="app-header">
             <div class="header-left">
-                <span class="sparkle-icon">✨</span>
+                <div class="claude-avatar-small">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+                    </svg>
+                </div>
                 <div class="assistant-details">
-                    <h1>Reservations Assistant</h1>
-                    <span class="status-badge"><span class="status-dot"></span>Online</span>
+                    <h1>Claude <span class="header-subtitle">· Reservations Assistant</span></h1>
                 </div>
             </div>
             <div class="header-right">
-                <button id="clear-session-btn" title="Clear Conversation">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                <button id="clear-session-btn" title="Reset Conversation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 6h18"></path>
                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
                         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
                     </svg>
                     <span>Reset Chat</span>
                 </button>
@@ -44,30 +45,32 @@
         <main class="chat-workspace">
             <div class="chat-content-container">
 
-                <!-- Empty Welcome State -->
+                <!-- Empty Welcome State (Claude Style) -->
                 <div id="empty-state" class="empty-state">
-                    <div class="welcome-badge">Powered by Agentforce</div>
-                    <div class="welcome-avatar">✨</div>
-                    <h2>How can I help you today?</h2>
-                    <p class="welcome-subtitle">Ask me about room availability, reservations, and details about your
-                        upcoming stay.</p>
+                    <div class="welcome-avatar-claude">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+                        </svg>
+                    </div>
+                    <h2>How can I help with your reservations?</h2>
+                    <p class="welcome-subtitle">I can assist with room availability, booking details, modifications, and hotel amenities.</p>
 
                     <div class="suggestions-grid">
                         <button class="suggestion-card" data-prompt="Show hotel room categories">
-                            <span class="suggestion-title">Explore rooms</span>
-                            <span class="suggestion-desc">View categories and descriptions</span>
+                            <span class="suggestion-title">Explore room categories</span>
+                            <span class="suggestion-desc">View luxury suites, deluxe rooms, and rates</span>
                         </button>
                         <button class="suggestion-card" data-prompt="Book a hotel room">
                             <span class="suggestion-title">Book a room</span>
-                            <span class="suggestion-desc">Check availability and reserve</span>
+                            <span class="suggestion-desc">Check dates and reserve stay</span>
                         </button>
                         <button class="suggestion-card" data-prompt="Show my bookings">
-                            <span class="suggestion-title">View bookings</span>
-                            <span class="suggestion-desc">See your current reservations</span>
+                            <span class="suggestion-title">View existing reservations</span>
+                            <span class="suggestion-desc">Check your active stay details</span>
                         </button>
                         <button class="suggestion-card" data-prompt="Cancel a reservation">
-                            <span class="suggestion-title">Modify reservation</span>
-                            <span class="suggestion-desc">Cancel or change your booking</span>
+                            <span class="suggestion-title">Modify or cancel</span>
+                            <span class="suggestion-desc">Update dates or cancel booking</span>
                         </button>
                     </div>
                 </div>
@@ -85,22 +88,22 @@
             </div>
         </main>
 
-        <!-- Fixed bottom composer -->
+        <!-- Fixed bottom composer (Claude style) -->
         <footer class="app-composer">
             <div class="composer-container">
                 <form id="chat-form" class="chat-form">
-                    <textarea id="chat-input" placeholder="Message Reservations Assistant..." rows="1" required
+                    <textarea id="chat-input" placeholder="Message Claude..." rows="1" required
                         autocomplete="off"></textarea>
                     <button type="submit" id="send-btn" class="send-btn" disabled title="Send message">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="12" y1="19" x2="12" y2="5"></line>
                             <polyline points="5 12 12 5 19 12"></polyline>
                         </svg>
                     </button>
                 </form>
                 <div class="composer-info">
-                    AI can make mistakes. Verify important reservation details.
+                    Claude for Hotel Reservations · Powered by Agentforce
                 </div>
             </div>
         </footer>

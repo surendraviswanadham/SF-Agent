@@ -1,23 +1,24 @@
-/* Global Styles & Variables */
+/* Anthropic Claude Design System & Styles */
 :root {
-    --bg-main: #f9f9fb;
-    --bg-card: #ffffff;
-    --text-primary: #1f2937;
-    --text-secondary: #4b5563;
-    --text-muted: #9ca3af;
-    --brand-color: #6366f1;
-    --brand-hover: #4f46e5;
-    --brand-light: #e0e7ff;
-    --border-color: #e5e7eb;
-    --border-hover: #cbd5e1;
-    --user-bubble: #f3f4f6;
+    --bg-main: #faf8f5;            /* Signature Claude warm cream background */
+    --bg-card: #ffffff;            /* Pure white surface */
+    --bg-composer: #ffffff;        /* Crisp input container */
+    --text-primary: #2d2b2a;       /* Warm deep ink */
+    --text-secondary: #6b6661;     /* Warm charcoal */
+    --text-muted: #9c958d;         /* Soft muted warm gray */
+    --brand-color: #da7756;        /* Anthropic Claude Terracotta Orange */
+    --brand-hover: #c86343;        /* Darker Terracotta hover */
+    --brand-light: #fbf0ea;        /* Soft peach tint */
+    --user-bubble: #f3ede2;        /* Soft warm clay/peach user bubble */
     --ai-bubble: transparent;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    --border-color: #e8e3dc;       /* Warm subtle border */
+    --border-hover: #d8d0c5;
+    --shadow-sm: 0 1px 3px rgba(45, 43, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(45, 43, 42, 0.06);
+    --shadow-lg: 0 10px 25px rgba(45, 43, 42, 0.08);
     
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --font-heading: 'Lora', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -30,10 +31,11 @@ body {
     font-family: var(--font-body);
     background-color: var(--bg-main);
     color: var(--text-primary);
-    line-height: 1.6;
+    line-height: 1.65;
     overflow: hidden;
     height: 100vh;
     height: 100dvh;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* App Layout Container */
@@ -42,19 +44,19 @@ body {
     flex-direction: column;
     height: 100%;
     width: 100%;
+    background-color: var(--bg-main);
 }
 
-/* Header Styling */
+/* Claude Header Styling */
 .app-header {
-    background-color: var(--bg-card);
+    background-color: var(--bg-main);
     border-bottom: 1px solid var(--border-color);
-    padding: 0.8rem 1.5rem;
+    padding: 0.85rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 64px;
+    height: 60px;
     z-index: 10;
-    box-shadow: var(--shadow-sm);
 }
 
 .header-left {
@@ -63,53 +65,51 @@ body {
     gap: 0.75rem;
 }
 
-.sparkle-icon {
-    font-size: 1.5rem;
-    animation: sparkle-glow 3s infinite ease-in-out;
+.claude-avatar-small {
+    width: 28px;
+    height: 28px;
+    background-color: var(--brand-color);
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(218, 119, 86, 0.25);
 }
 
 .assistant-details h1 {
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
     font-weight: 600;
     color: var(--text-primary);
-}
-
-.status-badge {
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    font-weight: 500;
 }
 
-.status-dot {
-    width: 7px;
-    height: 7px;
-    background-color: #10b981;
-    border-radius: 50%;
-    display: inline-block;
-    animation: status-pulse 1.8s infinite ease-in-out;
+.header-subtitle {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-secondary);
 }
 
 .header-right #clear-session-btn {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     background-color: transparent;
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
-    padding: 0.45rem 0.85rem;
+    padding: 0.4rem 0.75rem;
     border-radius: 8px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 }
 
 .header-right #clear-session-btn:hover {
-    background-color: var(--bg-main);
+    background-color: #f3ede2;
     color: var(--text-primary);
     border-color: var(--border-hover);
 }
@@ -127,7 +127,7 @@ body {
 
 .chat-content-container {
     width: 100%;
-    max-width: 850px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 2.5rem 1.5rem;
     display: flex;
@@ -135,7 +135,7 @@ body {
     flex-grow: 1;
 }
 
-/* Welcome / Empty State */
+/* Empty Welcome State (Claude style) */
 .empty-state {
     display: flex;
     flex-direction: column;
@@ -146,52 +146,40 @@ body {
     padding: 2rem 0;
 }
 
-.welcome-badge {
-    background-color: var(--brand-light);
-    color: var(--brand-hover);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.welcome-avatar {
-    width: 68px;
-    height: 68px;
-    background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);
+.welcome-avatar-claude {
+    width: 64px;
+    height: 64px;
+    background-color: var(--brand-color);
     color: white;
-    font-size: 2.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 16px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 8px 20px rgba(218, 119, 86, 0.3);
 }
 
 .empty-state h2 {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 1.85rem;
+    font-weight: 500;
     color: var(--text-primary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.65rem;
+    letter-spacing: -0.01em;
 }
 
 .welcome-subtitle {
     color: var(--text-secondary);
     font-size: 0.95rem;
-    max-width: 500px;
+    max-width: 520px;
     margin-bottom: 2.5rem;
 }
 
-/* Suggestions Grid */
+/* Suggestions Grid (Claude Pill Style) */
 .suggestions-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.85rem;
     width: 100%;
     max-width: 720px;
 }
@@ -199,7 +187,7 @@ body {
 .suggestion-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
-    padding: 1.1rem;
+    padding: 1rem 1.1rem;
     border-radius: 12px;
     text-align: left;
     cursor: pointer;
@@ -212,19 +200,20 @@ body {
 
 .suggestion-card:hover {
     border-color: var(--brand-color);
-    background-color: #fafaff;
+    background-color: #fffaf7;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
 .suggestion-title {
+    font-family: var(--font-heading);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     color: var(--text-primary);
 }
 
 .suggestion-desc {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--text-secondary);
 }
 
@@ -232,17 +221,17 @@ body {
 .message-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.2rem;
     width: 100%;
 }
 
 .message-wrapper {
     display: flex;
     width: 100%;
-    animation: fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* User Message Bubble styling */
+/* User Message Bubble styling (Claude format) */
 .message-wrapper.user {
     justify-content: flex-end;
 }
@@ -250,15 +239,16 @@ body {
 .message-wrapper.user .message-bubble {
     background-color: var(--user-bubble);
     color: var(--text-primary);
-    border-radius: 18px 18px 2px 18px;
+    border-radius: 18px 18px 4px 18px;
     padding: 0.85rem 1.25rem;
-    max-width: 70%;
+    max-width: 78%;
     font-size: 0.95rem;
-    box-shadow: var(--shadow-sm);
+    line-height: 1.55;
     word-break: break-word;
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-/* AI Message Bubble styling */
+/* AI Message Bubble styling (Claude format) */
 .message-wrapper.ai {
     justify-content: flex-start;
     gap: 1rem;
@@ -267,16 +257,15 @@ body {
 .ai-avatar {
     width: 32px;
     height: 32px;
-    background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);
+    background-color: var(--brand-color);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 0.95rem;
-    font-weight: bold;
     flex-shrink: 0;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
+    box-shadow: 0 2px 6px rgba(218, 119, 86, 0.25);
 }
 
 .message-wrapper.ai .message-content {
@@ -285,47 +274,47 @@ body {
 }
 
 .message-wrapper.ai .message-bubble {
-    background-color: var(--ai-bubble);
+    background-color: transparent;
     color: var(--text-primary);
     font-size: 0.98rem;
-    line-height: 1.65;
+    line-height: 1.7;
 }
 
 /* Typography and Markdown styling inside AI response */
 .message-bubble h1, .message-bubble h2, .message-bubble h3, .message-bubble h4 {
     font-family: var(--font-heading);
     color: var(--text-primary);
-    margin: 1.2rem 0 0.5rem 0;
-    font-weight: 600;
+    margin: 1.4rem 0 0.5rem 0;
+    font-weight: 500;
 }
-.message-bubble h3 { font-size: 1.2rem; }
-.message-bubble h4 { font-size: 1.05rem; }
+.message-bubble h3 { font-size: 1.25rem; }
+.message-bubble h4 { font-size: 1.1rem; }
 
 .message-bubble p {
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.95rem;
 }
 .message-bubble p:last-child {
     margin-bottom: 0;
 }
 
 .message-bubble ul, .message-bubble ol {
-    margin: 0.5rem 0 0.85rem 1.5rem;
+    margin: 0.5rem 0 0.95rem 1.5rem;
 }
 
 .message-bubble li {
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.4rem;
 }
 
-/* Salesforce Record Card Styling */
+/* Salesforce Record Card Styling in Claude Theme */
 .salesforce-record-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 1.25rem;
-    margin: 1rem 0;
+    margin: 1.2rem 0;
     box-shadow: var(--shadow-sm);
-    max-width: 500px;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    max-width: 520px;
+    transition: box-shadow 0.2s ease;
 }
 
 .salesforce-record-card:hover {
@@ -344,13 +333,13 @@ body {
 
 .record-title {
     font-family: var(--font-heading);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--brand-hover);
 }
 
 .record-status-badge {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
@@ -362,7 +351,7 @@ body {
 .record-fields {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 0.85rem;
     margin-bottom: 1rem;
 }
 
@@ -372,7 +361,7 @@ body {
 }
 
 .field-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
     font-weight: 500;
     text-transform: uppercase;
@@ -394,9 +383,9 @@ body {
     background-color: var(--bg-main);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    padding: 0.4rem 0.8rem;
+    padding: 0.45rem 0.85rem;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -422,9 +411,9 @@ body {
 .table-container {
     width: 100%;
     overflow-x: auto;
-    margin: 1rem 0;
+    margin: 1.2rem 0;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: var(--shadow-sm);
     background-color: var(--bg-card);
 }
@@ -437,14 +426,14 @@ body {
 }
 
 .message-bubble th {
-    background-color: #f8fafc;
+    background-color: var(--bg-main);
     color: var(--text-secondary);
     font-weight: 600;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--border-color);
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.02em;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
 }
 
 .message-bubble td {
@@ -458,7 +447,7 @@ body {
 }
 
 .message-bubble tr:hover td {
-    background-color: #f8fafc;
+    background-color: #faf6f0;
 }
 
 /* Quick Replies & Suggestions under AI bubbles */
@@ -467,7 +456,7 @@ body {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 1rem;
-    padding-left: 44px; /* Align with AI bubble */
+    padding-left: 48px;
     width: 100%;
 }
 
@@ -475,7 +464,7 @@ body {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--brand-hover);
-    padding: 0.45rem 0.9rem;
+    padding: 0.45rem 0.95rem;
     border-radius: 50px;
     font-size: 0.85rem;
     font-weight: 500;
@@ -490,12 +479,12 @@ body {
     transform: translateY(-1px);
 }
 
-/* Dynamic Typing Indicator */
+/* Claude Typing Indicator */
 .typing-wrapper {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding-left: 44px; /* Align with messages */
+    padding-left: 48px;
     margin-top: 0.5rem;
     animation: fade-in 0.2s ease;
 }
@@ -520,7 +509,7 @@ body {
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
-/* Sticky bottom composer area */
+/* Sticky Bottom Composer Area (Claude Style) */
 .app-composer {
     background-color: var(--bg-main);
     padding: 0 1.5rem 1.5rem;
@@ -532,28 +521,28 @@ body {
 
 .composer-container {
     width: 100%;
-    max-width: 850px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
 .chat-form {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 0.5rem;
+    background-color: var(--bg-composer);
+    border: 1.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 0.5rem 0.6rem;
     display: flex;
     align-items: flex-end;
     gap: 0.5rem;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(45, 43, 42, 0.03);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     position: relative;
 }
 
 .chat-form:focus-within {
     border-color: var(--brand-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12), var(--shadow-md);
+    box-shadow: 0 0 0 3px rgba(218, 119, 86, 0.15), var(--shadow-md);
 }
 
 .chat-form textarea {
@@ -567,7 +556,7 @@ body {
     font-size: 0.95rem;
     color: var(--text-primary);
     max-height: 200px;
-    min-height: 36px;
+    min-height: 38px;
     line-height: 1.5;
 }
 
@@ -576,8 +565,8 @@ body {
 }
 
 .send-btn {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     background-color: var(--brand-color);
     color: white;
     border: none;
@@ -609,19 +598,30 @@ body {
     color: var(--text-muted);
 }
 
-/* Salesforce Hidden Target Style */
+/* STRICT HIDING: Forcefully hide ALL Salesforce Embedded Messaging Widget Floating Elements */
 embedded-messaging-conversation-button,
 embedded-messaging-container,
+embedded-messaging-bootstrap,
 .embeddedMessagingConversationButton,
 .embeddedMessagingContainer,
-.salesforce-hidden-container {
-    position: fixed !important;
-    top: -9999px !important;
-    left: -9999px !important;
-    width: 375px !important;
-    height: 600px !important;
+.salesforce-hidden-container,
+[class*="embeddedMessaging"],
+[id*="embedded-messaging"],
+iframe[name*="embedded"],
+iframe[id*="embedded"] {
+    display: none !important;
+    visibility: hidden !important;
     opacity: 0 !important;
-    z-index: -9999 !important;
+    pointer-events: none !important;
+    position: fixed !important;
+    top: -99999px !important;
+    left: -99999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    z-index: -999999 !important;
 }
 
 /* Helper Utilities */
@@ -630,18 +630,8 @@ embedded-messaging-container,
 }
 
 /* Keyframes & Animations */
-@keyframes sparkle-glow {
-    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px rgba(99,102,241,0.2)); }
-    50% { transform: scale(1.1) rotate(15deg); filter: drop-shadow(0 0 8px rgba(99,102,241,0.6)); }
-}
-
-@keyframes status-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.6; }
-}
-
 @keyframes fade-in {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -670,7 +660,7 @@ embedded-messaging-container,
     }
     
     .message-wrapper.user .message-bubble {
-        max-width: 85%;
+        max-width: 88%;
     }
     
     .app-composer {
@@ -678,11 +668,11 @@ embedded-messaging-container,
     }
     
     .chat-form {
-        border-radius: 12px;
+        border-radius: 16px;
     }
     
     .quick-replies-container {
-        padding-left: 0; /* Stack below on mobile */
+        padding-left: 0;
         justify-content: center;
     }
 }
