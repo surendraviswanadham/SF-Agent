@@ -195,6 +195,13 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.style.height = 'auto';
         sendBtn.disabled = true;
 
+        // Add user message to local state immediately for instant feedback
+        const lastMsg = localMessages[localMessages.length - 1];
+        if (!lastMsg || lastMsg.role !== 'User' || lastMsg.text !== text) {
+            localMessages.push({ role: 'User', text: text });
+            renderMessages([]);
+        }
+
         // Set local typing indicator state immediately
         isThinking = true;
         updateTypingIndicator();
@@ -219,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await embeddedservice_bootstrap.utilAPI.sendTextMessage(text);
                 console.log('Message sent to Salesforce successfully.');
-                setTimeout(syncWithSalesforceDOM, 100);
+                setTimeout(syncWithSalesforceDOM, 200);
                 return;
             } catch (err) {
                 console.warn('sendTextMessage failed, trying DOM fallback:', err);
@@ -229,14 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. DOM Fallback
         if (fallbackSendToSalesforceDOM(text)) {
             console.log('Message sent to Salesforce via DOM fallback.');
-            setTimeout(syncWithSalesforceDOM, 100);
+            setTimeout(syncWithSalesforceDOM, 200);
             return;
         }
 
         // 5. Fallback error message if SDK failed to load after timeout
         console.error('Salesforce Embedded Messaging SDK configuration failed to load.');
         isThinking = false;
-        addSystemErrorMessage('Unable to connect to Salesforce Agent: The Experience Cloud Site or Messaging Channel requires public Guest User Access in Salesforce Setup.');
+        addSystemErrorMessage('Unable to connect to Salesforce Agent: Please verify setup and network connectivity.');
     }
 
     // Add visual system error bubble
@@ -777,30 +784,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Register Salesforce SDK Events to trigger immediate synchronization
+    function handleSalesforceMessageEvent(event) {
+        console.log('MIAW Event received:', event.type, event.detail);
+        
+        if (event.detail) {
+            const entry = event.detail.conversationEntry || event.detail.entry || event.detail;
+            const senderRole = entry.sender?.role || event.detail.senderRole || event.detail.role;
+            
+            if (senderRole === 'Agent' || senderRole === 'Chatbot') {
+                isThinking = false;
+            }
+            
+            // Extract text from event if available
+            let text = '';
+            if (entry.entryPayload?.abstractMessage?.staticContent?.text) {
+                text = entry.entryPayload.abstractMessage.staticContent.text;
+            } else if (typeof entry.content === 'string') {
+                text = entry.content;
+            } else if (typeof entry.text === 'string') {
+                text = entry.text;
+            }
+            
+            if (text) {
+                const role = (senderRole === 'User' || senderRole === 'EndUser') ? 'User' : 'Agent';
+                const exists = localMessages.some(m => m.role === role && m.text === text);
+                if (!exists) {
+                    localMessages.push({ role, text });
+                    renderMessages([]);
+                }
+            }
+        }
+        
+        updateTypingIndicator();
+        setTimeout(syncWithSalesforceDOM, 100);
+    }
+
     window.addEventListener('onEmbeddedMessagingReady', () => {
         console.log('Salesforce Embedded Messaging Ready event received.');
         isInitialized = true;
         tryLaunchSalesforceChat();
     });
 
+    window.addEventListener('onEmbeddedMessagingConversationStarted', (event) => {
+        console.log('Salesforce Embedded Messaging Conversation Started:', event.detail);
+        isInitialized = true;
+        setTimeout(syncWithSalesforceDOM, 100);
+    });
+
+    window.addEventListener('onEmbeddedMessagingConversationEntryCreated', handleSalesforceMessageEvent);
+    window.addEventListener('onEmbeddedMessagingMessageReceived', handleSalesforceMessageEvent);
+    window.addEventListener('onEmbeddedMessagingMessageSent', handleSalesforceMessageEvent);
+    window.addEventListener('onEmbeddedMessageSent', handleSalesforceMessageEvent);
+
     // Immediate check on load in case onEmbeddedMessagingReady fired before listener attached
     if (window.embeddedservice_bootstrap && embeddedservice_bootstrap.utilAPI) {
         isInitialized = true;
         tryLaunchSalesforceChat();
     }
-
-    window.addEventListener('onEmbeddedMessageSent', (event) => {
-        console.log('MIAW message sent or received event:', event.detail);
-        
-        // Read role
-        const role = event.detail.conversationEntry?.sender?.role;
-        if (role === 'Agent' || role === 'Chatbot') {
-            isThinking = false;
-        }
-
-        // Trigger sync immediately to update view
-        setTimeout(syncWithSalesforceDOM, 100);
-    });
 
     // Fallback sync loop: checks the Salesforce DOM every 350ms to grab history, status updates, card renders
     setInterval(() => {
