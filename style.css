@@ -598,7 +598,7 @@ body {
     color: var(--text-muted);
 }
 
-/* STRICT HIDING: Forcefully hide ALL Salesforce Embedded Messaging Widget Floating Elements */
+/* Position ALL Salesforce Embedded Messaging Widget Floating Elements Off-Screen */
 embedded-messaging-conversation-button,
 embedded-messaging-container,
 embedded-messaging-bootstrap,
@@ -609,19 +609,15 @@ embedded-messaging-bootstrap,
 [id*="embedded-messaging"],
 iframe[name*="embedded"],
 iframe[id*="embedded"] {
-    display: none !important;
-    visibility: hidden !important;
+    position: fixed !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    position: fixed !important;
-    top: -99999px !important;
-    left: -99999px !important;
-    width: 0 !important;
-    height: 0 !important;
-    max-width: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    z-index: -999999 !important;
+    z-index: -99999 !important;
+    clip: rect(0, 0, 0, 0) !important;
 }
 
 /* Helper Utilities */

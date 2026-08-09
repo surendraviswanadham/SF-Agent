@@ -117,10 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
             typeof embeddedservice_bootstrap.utilAPI.launchChat === 'function') {
             
             console.log('Attempting to launch Salesforce chat...');
-            hasLaunched = true;
             return embeddedservice_bootstrap.utilAPI.launchChat()
                 .then(() => {
                     console.log('Salesforce chat launched successfully.');
+                    hasLaunched = true;
                     isInitialized = true;
                     syncWithSalesforceDOM();
                 })
@@ -582,22 +582,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 5. Compare with local state. If changed, render!
-        let hasChanges = false;
-        if (newMessages.length !== localMessages.length) {
-            hasChanges = true;
-        } else {
-            for (let i = 0; i < newMessages.length; i++) {
-                if (newMessages[i].role !== localMessages[i].role || 
-                    newMessages[i].text !== localMessages[i].text) {
-                    hasChanges = true;
-                    break;
+        // 5. Safely merge scraped Salesforce messages into local state without erasing user messages
+        let hasNewMessage = false;
+        newMessages.forEach(msg => {
+            const exists = localMessages.some(m => m.role === msg.role && m.text === msg.text);
+            if (!exists) {
+                localMessages.push({ role: msg.role, text: msg.text });
+                hasNewMessage = true;
+                if (msg.role === 'Agent') {
+                    isThinking = false;
                 }
             }
-        }
+        });
 
-        if (hasChanges) {
-            localMessages = newMessages;
+        if (hasNewMessage || recordCards.length > 0) {
             renderMessages(recordCards);
         }
 
@@ -844,13 +842,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function suppressSalesforceFloatingWidget() {
         const targets = document.querySelectorAll('embedded-messaging-conversation-button, embedded-messaging-container, embedded-messaging-bootstrap, .embeddedMessagingConversationButton, .embeddedMessagingContainer, [class*="embeddedMessaging"]');
         targets.forEach(el => {
-            el.style.setProperty('display', 'none', 'important');
-            el.style.setProperty('visibility', 'hidden', 'important');
+            el.style.setProperty('position', 'fixed', 'important');
+            el.style.setProperty('top', '-9999px', 'important');
+            el.style.setProperty('left', '-9999px', 'important');
+            el.style.setProperty('width', '1px', 'important');
+            el.style.setProperty('height', '1px', 'important');
             el.style.setProperty('opacity', '0', 'important');
             el.style.setProperty('pointer-events', 'none', 'important');
-            el.style.setProperty('position', 'fixed', 'important');
-            el.style.setProperty('top', '-99999px', 'important');
-            el.style.setProperty('left', '-99999px', 'important');
+            el.style.setProperty('z-index', '-99999', 'important');
         });
     }
 
