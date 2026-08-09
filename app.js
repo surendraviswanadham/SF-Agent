@@ -787,28 +787,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Register Salesforce SDK Events to trigger immediate synchronization
     function handleSalesforceMessageEvent(event) {
-        console.log('MIAW Event received:', event.type, event.detail);
+        console.log('MIAW Event received:', event.type, JSON.stringify(event.detail));
         
         if (event.detail) {
-            const entry = event.detail.conversationEntry || event.detail.entry || event.detail;
-            const senderRole = entry.sender?.role || event.detail.senderRole || event.detail.role;
+            const detail = event.detail;
+            const entry = detail.conversationEntry || detail.entry || detail;
+            const senderRole = entry.sender?.role || detail.senderRole || detail.role || entry.role;
             
-            if (senderRole === 'Agent' || senderRole === 'Chatbot') {
+            let role = 'Agent';
+            if (senderRole === 'User' || senderRole === 'EndUser') {
+                role = 'User';
+            } else if (senderRole === 'Agent' || senderRole === 'Chatbot') {
+                role = 'Agent';
                 isThinking = false;
             }
             
-            // Extract text from event if available
+            // Extract text from all potential MIAW payload paths
             let text = '';
-            if (entry.entryPayload?.abstractMessage?.staticContent?.text) {
-                text = entry.entryPayload.abstractMessage.staticContent.text;
+            const abstractMessage = entry.entryPayload?.abstractMessage || detail.entryPayload?.abstractMessage;
+            const staticContent = abstractMessage?.staticContent;
+            
+            if (staticContent?.text) {
+                text = staticContent.text;
+            } else if (staticContent?.caption) {
+                text = staticContent.caption;
+            } else if (staticContent?.title) {
+                text = staticContent.title;
             } else if (typeof entry.content === 'string') {
                 text = entry.content;
             } else if (typeof entry.text === 'string') {
                 text = entry.text;
+            } else if (typeof detail.text === 'string') {
+                text = detail.text;
+            } else if (typeof detail.content === 'string') {
+                text = detail.content;
             }
             
             if (text) {
-                const role = (senderRole === 'User' || senderRole === 'EndUser') ? 'User' : 'Agent';
                 const exists = localMessages.some(m => m.role === role && m.text === text);
                 if (!exists) {
                     localMessages.push({ role, text });
@@ -843,13 +858,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const targets = document.querySelectorAll('embedded-messaging-conversation-button, embedded-messaging-container, embedded-messaging-bootstrap, .embeddedMessagingConversationButton, .embeddedMessagingContainer, [class*="embeddedMessaging"]');
         targets.forEach(el => {
             el.style.setProperty('position', 'fixed', 'important');
-            el.style.setProperty('top', '-9999px', 'important');
-            el.style.setProperty('left', '-9999px', 'important');
-            el.style.setProperty('width', '1px', 'important');
-            el.style.setProperty('height', '1px', 'important');
-            el.style.setProperty('opacity', '0', 'important');
+            el.style.setProperty('bottom', '0', 'important');
+            el.style.setProperty('right', '0', 'important');
+            el.style.setProperty('width', '375px', 'important');
+            el.style.setProperty('height', '600px', 'important');
+            el.style.setProperty('opacity', '0.001', 'important');
             el.style.setProperty('pointer-events', 'none', 'important');
-            el.style.setProperty('z-index', '-99999', 'important');
+            el.style.setProperty('z-index', '-1', 'important');
+            el.style.setProperty('visibility', 'visible', 'important');
+            el.style.setProperty('display', 'block', 'important');
         });
     }
 
