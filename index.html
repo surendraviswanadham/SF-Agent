@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Reservations - AI Assistant</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Minimal, clean header -->
+        <header class="app-header">
+            <div class="header-left">
+                <span class="sparkle-icon">✨</span>
+                <div class="assistant-details">
+                    <h1>Reservations Assistant</h1>
+                    <span class="status-badge"><span class="status-dot"></span>Online</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="clear-session-btn" title="Clear Conversation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                    <span>Reset Chat</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main conversational workspace -->
+        <main class="chat-workspace">
+            <div class="chat-content-container">
+
+                <!-- Empty Welcome State -->
+                <div id="empty-state" class="empty-state">
+                    <div class="welcome-badge">Powered by Agentforce</div>
+                    <div class="welcome-avatar">✨</div>
+                    <h2>How can I help you today?</h2>
+                    <p class="welcome-subtitle">Ask me about room availability, reservations, and details about your
+                        upcoming stay.</p>
+
+                    <div class="suggestions-grid">
+                        <button class="suggestion-card" data-prompt="Show hotel room categories">
+                            <span class="suggestion-title">Explore rooms</span>
+                            <span class="suggestion-desc">View categories and descriptions</span>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Book a hotel room">
+                            <span class="suggestion-title">Book a room</span>
+                            <span class="suggestion-desc">Check availability and reserve</span>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Show my bookings">
+                            <span class="suggestion-title">View bookings</span>
+                            <span class="suggestion-desc">See your current reservations</span>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Cancel a reservation">
+                            <span class="suggestion-title">Modify reservation</span>
+                            <span class="suggestion-desc">Cancel or change your booking</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Chat Messages List -->
+                <div id="message-list" class="message-list hidden">
+                    <!-- Dynamic message bubbles will go here -->
+                </div>
+
+                <!-- Custom suggested choices container (placed at the bottom of messages) -->
+                <div id="quick-replies-container" class="quick-replies-container hidden">
+                    <!-- Dynamic suggested action buttons will go here -->
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Fixed bottom composer -->
+        <footer class="app-composer">
+            <div class="composer-container">
+                <form id="chat-form" class="chat-form">
+                    <textarea id="chat-input" placeholder="Message Reservations Assistant..." rows="1" required
+                        autocomplete="off"></textarea>
+                    <button type="submit" id="send-btn" class="send-btn" disabled title="Send message">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="19" x2="12" y2="5"></line>
+                            <polyline points="5 12 12 5 19 12"></polyline>
+                        </svg>
+                    </button>
+                </form>
+                <div class="composer-info">
+                    AI can make mistakes. Verify important reservation details.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Hidden Salesforce Container (Off-Screen) -->
+    <div id="salesforce-container" class="salesforce-hidden-container"></div>
+
+    <!-- Salesforce Embedded Messaging Script -->
+    <script type='text/javascript'>
+        function initEmbeddedMessaging() {
+            try {
+                embeddedservice_bootstrap.settings.language = 'en_US';
+                embeddedservice_bootstrap.settings.hideChatButtonOnLoad = true;
+
+                embeddedservice_bootstrap.init(
+                    '00DgK000000LJcX',
+                    'Hotel_Room_Reservations_Channel',
+                    'https://orgfarm-9be9c42c69-dev-ed.develop.my.site.com/ESWHotelRoomReservation1779857934832',
+                    {
+                        scrt2URL: 'https://orgfarm-9be9c42c69-dev-ed.develop.my.salesforce-scrt.com'
+                    }
+                );
+            } catch (err) {
+                console.error('Error loading Embedded Messaging: ', err);
+            }
+        };
+    </script>
+    <script type='text/javascript'
+        src='https://orgfarm-9be9c42c69-dev-ed.develop.my.site.com/ESWHotelRoomReservation1779857934832/assets/js/bootstrap.min.js'
+        onload='initEmbeddedMessaging()'></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
