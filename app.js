@@ -91,6 +91,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Additional DOM Elements for Klaude AI
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+    const newChatBtn = document.getElementById('new-chat-btn');
+    const modelSelectBtn = document.getElementById('model-select-btn');
+    const currentModelName = document.getElementById('current-model-name');
+    const attachBtn = document.getElementById('attach-btn');
+    const voiceBtn = document.getElementById('voice-btn');
+
+    // Available models for model selector
+    const availableModels = ['Sonnet 5 Medium', 'Klaude 3.6 Medium', 'Sonnet 3.5'];
+    let currentModelIndex = 0;
+
+    // Sidebar Toggle
+    if (toggleSidebarBtn && sidebar) {
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    }
+
+    // New Chat Button in Sidebar
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', () => {
+            if (confirm('Start a new conversation with Klaude AI?')) {
+                clearSalesforceSession();
+            }
+        });
+    }
+
+    // Model Selector Cycle
+    if (modelSelectBtn && currentModelName) {
+        modelSelectBtn.addEventListener('click', () => {
+            currentModelIndex = (currentModelIndex + 1) % availableModels.length;
+            currentModelName.textContent = availableModels[currentModelIndex];
+        });
+    }
+
+    // Attachment / Plus button action
+    if (attachBtn) {
+        attachBtn.addEventListener('click', () => {
+            chatInput.focus();
+            chatInput.placeholder = "Describe what you'd like Klaude AI to analyze...";
+        });
+    }
+
+    // Voice button action
+    if (voiceBtn) {
+        voiceBtn.addEventListener('click', () => {
+            voiceBtn.style.color = voiceBtn.style.color === 'rgb(218, 119, 86)' ? '' : '#da7756';
+        });
+    }
+
     // Handle Reset Chat Button Click
     clearSessionBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset the conversation history?')) {
@@ -677,9 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formattedContent = `
                     <div class="message-wrapper ai">
                         <div class="ai-avatar">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-                            </svg>
+                            <span style="font-size: 1.15rem; line-height: 1; font-weight: bold;">✳</span>
                         </div>
                         <div class="message-content">
                             <div class="message-bubble">${htmlContent}</div>

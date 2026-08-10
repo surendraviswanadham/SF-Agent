@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Room Reservations - AI Assistant</title>
-    <!-- Google Fonts for Anthropic Claude typography -->
+    <title>Klaude AI - AI Assistant</title>
+    <!-- Google Fonts for Klaude AI typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -15,98 +15,228 @@
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- Minimalist Claude Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <div class="claude-avatar-small">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-                    </svg>
-                </div>
-                <div class="assistant-details">
-                    <h1>Claude <span class="header-subtitle">· Reservations Assistant</span></h1>
-                </div>
-            </div>
-            <div class="header-right">
-                <button id="clear-session-btn" title="Reset Conversation">
+    <div class="app-layout">
+        <!-- Collapsible Dark Sidebar (Matching Screenshot) -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-top">
+                <button id="new-chat-btn" class="sidebar-action-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 6h18"></path>
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>Reset Chat</span>
+                    <span>New chat</span>
                 </button>
             </div>
-        </header>
 
-        <!-- Main conversational workspace -->
-        <main class="chat-workspace">
-            <div class="chat-content-container">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Chats</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Projects</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span>Artifacts</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    <span>Code</span>
+                    <span class="upgrade-badge">Upgrade</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" y1="21" x2="4" y2="14"></line>
+                        <line x1="4" y1="10" x2="4" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12" y2="3"></line>
+                        <line x1="20" y1="21" x2="20" y2="16"></line>
+                        <line x1="20" y1="12" x2="20" y2="3"></line>
+                        <line x1="1" y1="14" x2="7" y2="14"></line>
+                        <line x1="9" y1="8" x2="15" y2="8"></line>
+                        <line x1="17" y1="16" x2="23" y2="16"></line>
+                    </svg>
+                    <span>Customize</span>
+                </a>
 
-                <!-- Empty Welcome State (Claude Style) -->
-                <div id="empty-state" class="empty-state">
-                    <div class="welcome-avatar-claude">
-                        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
-                            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-                        </svg>
-                    </div>
-                    <h2>How can I help with your reservations?</h2>
-                    <p class="welcome-subtitle">I can assist with room availability, booking details, modifications, and hotel amenities.</p>
+                <div class="sidebar-section-title">Products</div>
+                <a href="#" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="13.5" cy="6.5" r=".5"></circle>
+                        <circle cx="17.5" cy="10.5" r=".5"></circle>
+                        <circle cx="8.5" cy="7.5" r=".5"></circle>
+                        <circle cx="6.5" cy="12.5" r=".5"></circle>
+                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.78 1.7-1.7 0-.42-.16-.8-.44-1.1-.28-.3-.43-.7-.43-1.1 0-.92.78-1.7 1.7-1.7H17c2.76 0 5-2.24 5-5 0-4.42-4.48-8-10-8z"></path>
+                    </svg>
+                    <span>Design</span>
+                </a>
 
-                    <div class="suggestions-grid">
-                        <button class="suggestion-card" data-prompt="Show hotel room categories">
-                            <span class="suggestion-title">Explore room categories</span>
-                            <span class="suggestion-desc">View luxury suites, deluxe rooms, and rates</span>
-                        </button>
-                        <button class="suggestion-card" data-prompt="Book a hotel room">
-                            <span class="suggestion-title">Book a room</span>
-                            <span class="suggestion-desc">Check dates and reserve stay</span>
-                        </button>
-                        <button class="suggestion-card" data-prompt="Show my bookings">
-                            <span class="suggestion-title">View existing reservations</span>
-                            <span class="suggestion-desc">Check your active stay details</span>
-                        </button>
-                        <button class="suggestion-card" data-prompt="Cancel a reservation">
-                            <span class="suggestion-title">Modify or cancel</span>
-                            <span class="suggestion-desc">Update dates or cancel booking</span>
-                        </button>
-                    </div>
+                <div class="sidebar-section-title">Recents</div>
+                <a href="#" class="nav-item recent-item active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Untitled chat</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">K</div>
+                    <span class="user-name">Klaude User</span>
                 </div>
-
-                <!-- Active Chat Messages List -->
-                <div id="message-list" class="message-list hidden">
-                    <!-- Dynamic message bubbles will go here -->
-                </div>
-
-                <!-- Custom suggested choices container (placed at the bottom of messages) -->
-                <div id="quick-replies-container" class="quick-replies-container hidden">
-                    <!-- Dynamic suggested action buttons will go here -->
-                </div>
-
             </div>
-        </main>
+        </aside>
 
-        <!-- Fixed bottom composer (Claude style) -->
-        <footer class="app-composer">
-            <div class="composer-container">
-                <form id="chat-form" class="chat-form">
-                    <textarea id="chat-input" placeholder="Message Claude..." rows="1" required
-                        autocomplete="off"></textarea>
-                    <button type="submit" id="send-btn" class="send-btn" disabled title="Send message">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="19" x2="12" y2="5"></line>
-                            <polyline points="5 12 12 5 19 12"></polyline>
+        <!-- Main Workspace -->
+        <main class="main-workspace">
+            <!-- Top Header with Sidebar Toggle -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button id="toggle-sidebar-btn" class="header-icon-btn" title="Toggle Sidebar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
                         </svg>
                     </button>
-                </form>
-                <div class="composer-info">
-                    Claude for Hotel Reservations · Powered by Agentforce
+                    <div class="brand-details">
+                        <h1>Klaude AI</h1>
+                        <span class="status-dot" title="Online"></span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button id="clear-session-btn" class="clear-session-btn" title="Reset Chat">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 6h18"></path>
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                        </svg>
+                        <span>Reset Chat</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Content Workspace -->
+            <div class="chat-workspace">
+                <div class="chat-content-container">
+
+                    <!-- Empty Welcome State (Matching Screenshot Format) -->
+                    <div id="empty-state" class="empty-state">
+                        <div class="greeting-container">
+                            <span class="terracotta-starburst">✳</span>
+                            <h2 class="greeting-text">Hey there, <span class="highlight-initial">Klaude AI</span></h2>
+                        </div>
+
+                        <div class="suggestions-grid">
+                            <button class="suggestion-card" data-prompt="How can Klaude AI assist me today?">
+                                <span class="suggestion-title">Explore AI capabilities</span>
+                                <span class="suggestion-desc">Ask questions, analyze information, or get help</span>
+                            </button>
+                            <button class="suggestion-card" data-prompt="Show hotel room categories">
+                                <span class="suggestion-title">Explore room categories</span>
+                                <span class="suggestion-desc">View luxury suites, deluxe rooms, and rates</span>
+                            </button>
+                            <button class="suggestion-card" data-prompt="Book a hotel room">
+                                <span class="suggestion-title">Book a room</span>
+                                <span class="suggestion-desc">Check dates and reserve stay</span>
+                            </button>
+                            <button class="suggestion-card" data-prompt="Show my bookings">
+                                <span class="suggestion-title">View existing reservations</span>
+                                <span class="suggestion-desc">Check your active stay details</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Chat Messages List -->
+                    <div id="message-list" class="message-list hidden">
+                        <!-- Dynamic message bubbles will go here -->
+                    </div>
+
+                    <!-- Custom suggested choices container -->
+                    <div id="quick-replies-container" class="quick-replies-container hidden">
+                        <!-- Dynamic suggested action buttons will go here -->
+                    </div>
+
                 </div>
             </div>
-        </footer>
+
+            <!-- Fixed Bottom Composer (Matching Screenshot format) -->
+            <footer class="app-composer">
+                <div class="composer-container">
+                    <form id="chat-form" class="chat-form">
+                        <div class="textarea-wrapper">
+                            <textarea id="chat-input" placeholder="How can I help you today?" rows="1" required
+                                autocomplete="off"></textarea>
+                        </div>
+                        <div class="composer-actions-bar">
+                            <div class="composer-actions-left">
+                                <button type="button" class="composer-icon-btn" id="attach-btn" title="Add attachment or prompt options">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="composer-actions-right">
+                                <div class="model-selector-dropdown">
+                                    <button type="button" class="model-selector-btn" id="model-select-btn">
+                                        <span id="current-model-name">Sonnet 5 Medium</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <button type="button" class="composer-icon-btn" id="voice-btn" title="Voice Input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                                    </svg>
+                                </button>
+                                <button type="submit" id="send-btn" class="send-btn" disabled title="Send message">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                                        <polyline points="5 12 12 5 19 12"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="composer-info">
+                        Klaude AI · Powered by Agentforce
+                    </div>
+                </div>
+            </footer>
+        </main>
     </div>
 
     <!-- Hidden Salesforce Container (Off-Screen) -->
